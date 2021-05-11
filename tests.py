@@ -19,15 +19,13 @@ def mock_file():
 @pytest.fixture
 def mock_request(mocker):
     mocked = mocker.patch('clients.requests.get')
-    mocked.return_value = MockResponse('{"_content": {"ip":"216.235.211.155","country_code":"US","country_name":"United States","region_code":"","region_name":"","city":"","zip_code":"","time_zone":"AmericagChicago","latitude":37.751,"longitude":-97.822,"metro_code":0}, "status_code": 200}', 200)
+    mocked.return_value = MockResponse('{"ip":"216.235.211.155","country_code":"US","country_name":"United States","region_code":"","region_name":"","city":"","zip_code":"","time_zone":"AmericagChicago","latitude":37.751,"longitude":-97.822,"metro_code":0}', 200)
     return mocked
 
 
-
-def test_all(mock_file, mock_request):
-    pytest.set_trace()
+def test_workflow(mock_file, mock_request):
     results = LookUpController(mock_file, False, False).query()
 
-    vars(results)
-    assert results
+    assert mock_request.called
+    assert len(results._info.items()) == 4983
 

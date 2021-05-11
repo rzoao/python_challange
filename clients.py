@@ -38,7 +38,7 @@ cache = LRUCache()
 
 def lru_cache(fn):
     def wrapper(other):
-        result = cache.fetch_data(other.ip)
+        result = cache.fetch_data(other.ip + str(type(other)))
         if result:
             return result
 
