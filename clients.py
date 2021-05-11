@@ -43,7 +43,7 @@ def lru_cache(fn):
             return result
 
         response = fn(other)
-        cache.cache_data(other.ip, response)
+        cache.cache_data(other.ip + str(type(other)), response)
         return response
 
     return wrapper
